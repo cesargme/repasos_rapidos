@@ -24,7 +24,7 @@ class PracticarInglesApp(App):
     def reiniciar(self):
         self.contador = 0
         self.intentos = 0
-        self.N = 5
+        self.N = 10
         self.diccionario = {}
         self.respuestas_correctas = []
 
