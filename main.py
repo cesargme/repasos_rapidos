@@ -3,8 +3,11 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
+from kivy.utils import platform
 import random
 import csv
+
+import os
 
 class PracticarInglesApp(App):
 
@@ -28,7 +31,16 @@ class PracticarInglesApp(App):
         self.diccionario = {}
         self.respuestas_correctas = []
 
-        with open('preguntas.csv', 'r', encoding="utf-8") as file:
+
+        if platform == 'android':
+            from android.storage import app_storage_path
+            storage_path = app_storage_path()
+            csv_path = f"{storage_path}/preguntas.csv"
+        else:
+            csv_path = "preguntas.csv"
+
+
+        with open(csv_path, 'r', encoding="utf-8") as file:
             reader = csv.reader(file)
             for i, row in enumerate(reader):
                 if i == 0:
