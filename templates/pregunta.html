@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregunta</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ pregunta }}</h1>
+        <form id="preguntaForm" action="/verificar" method="post">
+            <input type="hidden" name="pregunta" value="{{ pregunta }}">
+            {% for opcion in opciones %}
+                <div class="opcion">
+                    <input type="radio" id="{{ opcion }}" name="opcion" value="{{ opcion }}" onclick="submitForm()">
+                    <label for="{{ opcion }}">{{ opcion }}</label>
+                </div>
+            {% endfor %}
+        </form>
+        <p>Intentos: {{ intentos }}</p>
+    </div>
+    <script>
+        function submitForm() {
+            document.getElementById("preguntaForm").submit();
+        }
+    </script>
+</body>
+</html>

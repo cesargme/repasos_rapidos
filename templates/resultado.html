@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Resultado</h1>
+        {% if contador == N %}
+        <h2>🎉 Felicidades, has logrado una puntuación perfecta!</h2>
+      {% else %}
+        <h2>Hiciste {{ contador }} correctas de {{ N }} intentos.</h2>
+      {% endif %}
+      
+        <a href="/" class="btn">Volver a jugar</a>
+    </div>
+</body>
+</html>

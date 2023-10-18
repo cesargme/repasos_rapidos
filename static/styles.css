@@ -1,0 +1,52 @@
+/* Estilo Rustico y Agradable para Estudiar */
+body {
+    font-family: 'Georgia', serif;
+    background-color: #f4f1ea;
+    color: #3e3d32;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  input[type="radio"] {
+    display: none;
+  }
+  
+  input[type="radio"] + label {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #dcd0c0;
+  }
+  
+  input[type="radio"]:checked + label {
+    background-color: #b5a089;
+    color: white;
+  }
+  
+  h1, h2 {
+    color: #6b4423;
+  }
+  
+  button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #6b4423;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #5a381e;
+  }
+  
