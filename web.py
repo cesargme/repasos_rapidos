@@ -38,18 +38,24 @@ def pregunta():
 
     pregunta, opciones = random.choice(list(preguntas.items()))
     random.shuffle(opciones)
+    session['pregunta_actual'] = pregunta
+    session['opciones_actuales'] = opciones
     return render_template('pregunta.html', pregunta=pregunta, opciones=opciones, contador=session['contador'], intentos=session['intentos'])
 
 @app.route('/verificar', methods=['POST'])
 def verificar():
-    pregunta = request.form['pregunta']
+    pregunta = session.get('pregunta_actual')
+    opciones = session.get('opciones_actuales')
     respuesta_elegida = request.form['opcion']
 
     if (pregunta, respuesta_elegida) in respuestas_correctas:
         session['contador'] += 1
-
-    return redirect('/pregunta')
+        return render_template('verificar.html', correcto=True, correcta=respuesta_elegida, intentos=session['intentos'], pregunta=pregunta)
+    else:
+        correcta = [respuesta for pregunta, respuesta in respuestas_correctas if pregunta == session['pregunta_actual']][0]
+        return render_template('verificar.html', correcto=False, correcta=correcta, intentos=session['intentos'], pregunta=pregunta)
 
 if __name__ == '__main__':
     cargar_preguntas()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
+

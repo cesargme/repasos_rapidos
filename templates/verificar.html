@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container" onclick="window.location='/pregunta'">
+        {% if correcto %}
+            <div class="respuesta correcta">
+                <h1><span class="symbol">✔️</span> {{ pregunta }} <span class="destacado">{{ correcta }}</span></h1>
+            </div>
+        {% else %}
+            <div class="respuesta incorrecta">
+                <h1><span class="symbol">✖️</span> {{ pregunta }} <span class="destacado">{{ correcta }}</span></h1>
+            </div>
+        {% endif %}
+        <p>Has respondido {{ intentos }} de {{ N }} preguntas.</p>
+
+    </div>
+</body>
+</html>
