@@ -1,26 +1,32 @@
 from flask import Flask, render_template, request, redirect, session
 import random
 import csv
+import os
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+preguntas_path = os.path.join(dir_path, 'preguntas.csv')
+
+
 
 app = Flask(__name__)
 app.secret_key = 'tu_clave_secreta'
 
-preguntas = {}
+preguntas = []
 respuestas_correctas = []
 
 def cargar_preguntas():
     global preguntas, respuestas_correctas
-    preguntas = {}
+    preguntas = []
     respuestas_correctas = []
-    with open("preguntas.csv", 'r', encoding="utf-8") as file:
+    with open(preguntas_path, 'r', encoding="utf-8") as file:
         reader = csv.reader(file)
         for i, row in enumerate(reader):
             if i == 0:
-                continue
+                continue  # Salta la primera fila si es un encabezado
             pregunta = row[0]
             correcta = row[1]
             opciones = [opcion for opcion in row[1:] if opcion]
-            preguntas[pregunta] = opciones
+            preguntas.append({'pregunta': pregunta, 'opciones': opciones})
             respuestas_correctas.append((pregunta, correcta))
 
 @app.route('/', methods=['GET', 'POST'])
@@ -36,7 +42,9 @@ def pregunta():
     if session['intentos'] > session['N']:
         return render_template('resultado.html', contador=session['contador'], N=session['N'])
 
-    pregunta, opciones = random.choice(list(preguntas.items()))
+    pregunta_dict = random.choice(preguntas)
+    pregunta = pregunta_dict['pregunta']
+    opciones = pregunta_dict['opciones']
     random.shuffle(opciones)
     session['pregunta_actual'] = pregunta
     session['opciones_actuales'] = opciones
@@ -55,7 +63,8 @@ def verificar():
         correcta = [respuesta for pregunta, respuesta in respuestas_correctas if pregunta == session['pregunta_actual']][0]
         return render_template('verificar.html', correcto=False, correcta=correcta, intentos=session['intentos'], pregunta=pregunta)
 
+cargar_preguntas()
+
 if __name__ == '__main__':
-    cargar_preguntas()
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(port=5000, debug=True)
 

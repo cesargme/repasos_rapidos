@@ -1,2 +1,4 @@
 preguntas.csv
 bin/
+.vscode/launch.json
+__pycache__/web.cpython-310.pyc
